@@ -127,7 +127,7 @@ def run_rag_pipeline(pdf_path):
 
         return top_docs
     # 5. Initialize LLM
-    llm = ChatOllama(model="llama3.2:3b", temperature=0)
+    llm = ChatOllama(model="llama3.1", temperature=0)
 
     # 6. Professional Prompt
     template = """You are an expert analyst assistant. 
@@ -160,7 +160,7 @@ def run_rag_pipeline(pdf_path):
 
 if __name__ == "__main__":
     # UPDATE THIS PATH TO YOUR PDF
-    pdf_path = "D:\RAG LANGCHAIN PROJECT\data\data_file.pdf"
+    pdf_path = "D:\RAG_LANGCHAIN\data\input.pdf"
 
     chain = run_rag_pipeline(pdf_path)
 
