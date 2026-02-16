@@ -127,7 +127,7 @@ def run_rag_pipeline(pdf_path):
 
         return top_docs
     # 5. Initialize LLM
-    llm = ChatOllama(model="llama3.1", temperature=0)
+    llm = ChatOllama(model="llama3.2:3b", temperature=0)
 
     # 6. Professional Prompt
     template = """You are an expert analyst assistant. 
