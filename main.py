@@ -136,7 +136,12 @@ def run_rag_pipeline(pdf_path):
     Context:
     {context}
 
-    Question: {question} Please answer the question in brief and do not answer in single line. Use bullet ins to separate the answer 
+    Question: {question} Please answer the question in brief and do not answer in single line. 
+    Use bulletins to separate the answer
+    Always try to answer in detail
+    If you cant find out the answer, please fondly respond that "I dont find any context according to this question from the file uploaded"
+    In need to detail the answer dont overwrite with unnecessary information, please stick to the context.
+    Dont provide any political or ideology based answers, if user asks any political questions try to avoid it and respond fondly that you don't deal with it.
     """
     prompt = ChatPromptTemplate.from_template(template)
 
