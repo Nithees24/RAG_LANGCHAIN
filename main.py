@@ -136,7 +136,7 @@ def run_rag_pipeline(pdf_path):
     Context:
     {context}
 
-    Question: {question}
+    Question: {question} Please answer the question in brief and do not answer in single line. Use bullet ins to separate the answer 
     """
     prompt = ChatPromptTemplate.from_template(template)
 
@@ -166,6 +166,7 @@ if __name__ == "__main__":
 
 
     if chain:
+        start_total = time.perf_counter()
         print("\n" + "=" * 50)
         print("BOT READY")
         print("=" * 50 + "\n")
