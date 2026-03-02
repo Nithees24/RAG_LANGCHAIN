@@ -8,7 +8,7 @@ import time
 import logging
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
-import os
+
 
 load_dotenv()
 
@@ -16,7 +16,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s"
 )
-print("Loaded API Key:", os.getenv("GOOGLE_API_KEY") is not None)
+# print("Loaded API Key:", os.getenv("GOOGLE_API_KEY") is not None)
 logger = logging.getLogger(__name__)
 
 #1)
