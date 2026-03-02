@@ -6,11 +6,17 @@ from langchain_community.retrievers import BM25Retriever
 from flashrank import Ranker, RerankRequest
 import time
 import logging
+from langchain_google_genai import ChatGoogleGenerativeAI
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s"
 )
-
+print("Loaded API Key:", os.getenv("GOOGLE_API_KEY") is not None)
 logger = logging.getLogger(__name__)
 
 #1)
@@ -18,8 +24,12 @@ logger = logging.getLogger(__name__)
 from src.load_pdf import load_pdf_file
 from src.chunker import split_documents
 from src.embed_store_bge import create_vector_store_bge
+from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE)
 
-#2)
+
+
+
+
 def run_rag_pipeline(pdf_path):
     logger.info("Initializing RAG pipeline")
     # 1. Load & Split
@@ -126,8 +136,20 @@ def run_rag_pipeline(pdf_path):
         )
 
         return top_docs
-    # 5. Initialize LLM
-    llm = ChatOllama(model="llama3.2:3b", temperature=0)
+
+    if USE_API_LLM:
+        logger.info("LLM CALL: CLOUD-API")
+
+        llm = ChatGoogleGenerativeAI(
+            model=GEMINI_MODEL,
+            temperature=GEMINI_TEMPERATURE
+        )
+    else:
+        logger.info(
+            "LLM CALL: LOCAL"
+        )
+        # 5. Initialize LLM
+        llm = ChatOllama(model=LOCAL_MODEL, temperature=LOCAL_TEMPERATURE)
 
     # 6. Professional Prompt
     template = """You are an expert analyst assistant. 
