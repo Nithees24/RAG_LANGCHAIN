@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 from src.load_pdf import load_pdf_file
 from src.chunker import split_documents
 from src.embed_store_bge import create_vector_store_bge
-from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE)
+from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE,LOCAL_URL)
 
 
 def run_rag_pipeline(pdf_path):
@@ -146,7 +146,7 @@ def run_rag_pipeline(pdf_path):
             "LLM CALL: LOCAL"
         )
         # 5. Initialize LLM
-        llm = ChatOllama(model=LOCAL_MODEL, temperature=LOCAL_TEMPERATURE)
+        llm = ChatOllama(model=LOCAL_MODEL, temperature=LOCAL_TEMPERATURE, base_url=LOCAL_URL)
 
     # 6. Professional Prompt
     template = """You are an expert analyst assistant. 
