@@ -46,7 +46,7 @@ def run_rag_pipeline(pdf_path):
     logger.info("Split documents into %d chunks", len(chunks))
     # 2. Build Retrievers (Wide Net Strategy)
     # We fetch 20 results from each source to ensure we don't miss the answer.
-    logger.info("Creating vector store using BGE-M3 embeddings") #BAAI/BGM3 Basic general embedding model 3
+
 
     #2C)
     #VECTOR STORE RETRIEVER

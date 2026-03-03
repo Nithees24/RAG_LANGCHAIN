@@ -1,11 +1,11 @@
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
-import os
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-def create_vector_store_bge(
-    chunks,
-    persist_dir: str = "./chroma_bge"
-):
+
+from settings.config import(USE_API_EMBED,GEMINI_EMBED_MODEL,LOCAL_EMBED_MODEL)
+
+def create_vector_store_bge(chunks,persist_dir: str = "./chroma_bge"):
     """
     Create a ChromaDB vector store using bge-m3 embeddings.
 
@@ -17,17 +17,29 @@ def create_vector_store_bge(
         Chroma: ChromaDB vector store instance
     """
 
-    #1 Initialize BGE-M3 embeddings via Ollama
-    embeddings = OllamaEmbeddings(
-        model="bge-m3"
-    )
+    if USE_API_EMBED:
+        print("Creating vector store using Gemini embedding-001 embeddings")
+
+        embeddings = GoogleGenerativeAIEmbeddings(
+            model=GEMINI_EMBED_MODEL
+        )
+
+        # IMPORTANT:
+        # Use separate directory to avoid dimension mismatch
+        persist_dir = "./chroma_gemini"
+
+    else:
+
+        print("Creating vector store using BGE-M3 embeddings")
+
+        embeddings = OllamaEmbeddings(
+            model=LOCAL_EMBED_MODEL
+        )
+
+        persist_dir = "./chroma_bge"
 
     #2 Create (or load) ChromaDB vector store
-    vectorstore = Chroma.from_documents(
-        documents=chunks,
-        embedding=embeddings,
-        persist_directory=persist_dir
-    )
+    vectorstore = Chroma.from_documents(documents=chunks,embedding=embeddings,persist_directory=persist_dir)
 
     return vectorstore
 """      
