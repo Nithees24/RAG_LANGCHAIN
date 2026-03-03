@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 # Custom modules (Ensure these files exist in your folder)
 from src.load_pdf import load_pdf_file
 from src.chunker import split_documents
-from src.embed_store_bge import create_vector_store_bge
+from src.embed_store import create_vector_store_bge
 from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE,LOCAL_URL)
 
 
