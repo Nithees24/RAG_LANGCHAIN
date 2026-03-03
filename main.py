@@ -185,7 +185,6 @@ def run_rag_pipeline(pdf_path):
 if __name__ == "__main__":
     # UPDATE THIS PATH TO YOUR PDF
     pdf_path = "D:\RAG_LANGCHAIN\data\input.pdf"
-    start_total = time.perf_counter()
     chain = run_rag_pipeline(pdf_path)
 
 
