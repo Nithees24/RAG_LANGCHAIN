@@ -1,6 +1,6 @@
 #switch to use Embeddings and LLM API calls
 USE_API_LLM=True
-USE_API_EMBED = False
+USE_API_EMBED = True
 
 GEMINI_MODEL="gemini-2.5-flash"
 GEMINI_EMBED_MODEL="models/gemini-embedding-001"
