@@ -27,9 +27,6 @@ from src.embed_store_bge import create_vector_store_bge
 from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE)
 
 
-
-
-
 def run_rag_pipeline(pdf_path):
     logger.info("Initializing RAG pipeline")
     # 1. Load & Split

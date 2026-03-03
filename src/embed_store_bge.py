@@ -1,9 +1,14 @@
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_pinecone import PineconeVectorStore
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-from settings.config import(USE_API_EMBED,GEMINI_EMBED_MODEL,LOCAL_EMBED_MODEL)
+from settings.config import(USE_API_EMBED,GEMINI_EMBED_MODEL,LOCAL_EMBED_MODEL,PINECONE_INDEX)
+
 
 def create_vector_store_bge(chunks,persist_dir: str = "./chroma_bge"):
     """
@@ -20,28 +25,32 @@ def create_vector_store_bge(chunks,persist_dir: str = "./chroma_bge"):
     if USE_API_EMBED:
         print("Creating vector store using Gemini embedding-001 embeddings")
 
+        #geminiembeddings
         embeddings = GoogleGenerativeAIEmbeddings(
             model=GEMINI_EMBED_MODEL
         )
 
-        # IMPORTANT:
-        # Use separate directory to avoid dimension mismatch
-        persist_dir = "./chroma_gemini"
+        #pineconevectordb
+        vectorstore = PineconeVectorStore.from_documents(
+            documents=chunks,
+            embedding=embeddings,
+            index_name=PINECONE_INDEX
+        )
+
+        return vectorstore
 
     else:
-
         print("Creating vector store using BGE-M3 embeddings")
-
         embeddings = OllamaEmbeddings(
             model=LOCAL_EMBED_MODEL
         )
 
-        persist_dir = "./chroma_bge"
+        persist_dir = "./chroma_bge" #local vector store dir
 
-    #2 Create (or load) ChromaDB vector store
-    vectorstore = Chroma.from_documents(documents=chunks,embedding=embeddings,persist_directory=persist_dir)
+        #2 Create (or load) ChromaDB vector store
+        vectorstore = Chroma.from_documents(documents=chunks,embedding=embeddings,persist_directory=persist_dir)
 
-    return vectorstore
+        return vectorstore
 """      
 # --- TEST BLOCK ---
 # Run this file directly to verify it works
