@@ -8,7 +8,7 @@ import time
 import logging
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
-
+import google.generativeai as genai
 
 load_dotenv()
 
@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 from src.load_pdf import load_pdf_file
 from src.chunker import split_documents
 from src.embed_store import create_vector_store
-from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE,LOCAL_URL)
+from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_EMBED_MODEL,LOCAL_MODEL,LOCAL_TEMPERATURE,LOCAL_URL)
 
 
 def run_rag_pipeline(pdf_path):
@@ -48,6 +48,10 @@ def run_rag_pipeline(pdf_path):
     #2C)
     #VECTOR STORE RETRIEVER
     vector_store = create_vector_store(chunks)
+    model = genai.GenerativeModel(GEMINI_EMBED_MODEL)
+    token_response = model.count_tokens(chunks)
+    print(f"Tokens consumed: {token_response.total_tokens}")
+
     vector_retriever = vector_store.as_retriever(search_kwargs={"k": 30})
 
     #KEYWORD  RETRIEVER
