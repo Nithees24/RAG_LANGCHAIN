@@ -10,7 +10,7 @@ load_dotenv()
 from settings.config import(USE_API_EMBED,GEMINI_EMBED_MODEL,LOCAL_EMBED_MODEL,PINECONE_INDEX)
 
 
-def create_vector_store_bge(chunks,persist_dir: str = "./chroma_bge"):
+def create_vector_store(chunks):
     """
     Create a ChromaDB vector store using bge-m3 embeddings.
 

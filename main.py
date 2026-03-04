@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 # Custom modules (Ensure these files exist in your folder)
 from src.load_pdf import load_pdf_file
 from src.chunker import split_documents
-from src.embed_store import create_vector_store_bge
+from src.embed_store import create_vector_store
 from settings.config import(USE_API_LLM,GEMINI_MODEL,GEMINI_TEMPERATURE,LOCAL_MODEL,LOCAL_TEMPERATURE,LOCAL_URL)
 
 
@@ -47,7 +47,7 @@ def run_rag_pipeline(pdf_path):
 
     #2C)
     #VECTOR STORE RETRIEVER
-    vector_store = create_vector_store_bge(chunks)
+    vector_store = create_vector_store(chunks)
     vector_retriever = vector_store.as_retriever(search_kwargs={"k": 30})
 
     #KEYWORD  RETRIEVER
