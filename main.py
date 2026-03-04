@@ -44,6 +44,12 @@ def run_rag_pipeline(pdf_path):
     # 2. Build Retrievers (Wide Net Strategy)
     # We fetch 20 results from each source to ensure we don't miss the answer.
 
+    # tokencalculator (approx)
+    total_chars = sum(len(c.page_content) for c in chunks)
+    estimated_tokens = total_chars // 4
+    logger.info("Total chunks:           %d", len(chunks))
+    logger.info("Total characters:       %s", f"{total_chars:,}")
+    logger.info("Estimated embed tokens: %s", f"{estimated_tokens:,}")
 
     #2C)
     #VECTOR STORE RETRIEVER
@@ -184,7 +190,7 @@ def run_rag_pipeline(pdf_path):
 
 if __name__ == "__main__":
     # UPDATE THIS PATH TO YOUR PDF
-    pdf_path = "D:\RAG_LANGCHAIN\data\input.pdf"
+    pdf_path = "/data/input.pdf"
     chain = run_rag_pipeline(pdf_path)
 
 
