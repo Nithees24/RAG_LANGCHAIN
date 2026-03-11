@@ -189,13 +189,13 @@ if __name__ == "__main__":
 
 
     if chain:
-        start_total = time.perf_counter()
+
         print("\n" + "=" * 50)
         print("BOT READY")
         print("=" * 50 + "\n")
 
         while True:
-            query = input("You: ").strip()
+            query = input("\nYou: ").strip()
             if query.lower() in ["exit", "quit"]: break
 
             try:
@@ -204,12 +204,8 @@ if __name__ == "__main__":
                 start_llm = time.perf_counter()
                 response = chain.invoke(query)
                 llm_time = time.perf_counter() - start_llm
-
-                total_time = time.perf_counter() - start_total
-
                 print(f"\nBot:\n{response}")
                 print(f"\nLLM time: {llm_time:.3f} sec")
-                print(f"Total time: {total_time:.3f} sec")
                 print("-" * 50)
             except Exception as e:
                 print(f"Error: {e}")

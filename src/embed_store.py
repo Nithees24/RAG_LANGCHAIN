@@ -30,6 +30,10 @@ def create_vector_store_bge(chunks,persist_dir: str = "./chroma_bge"):
             model=GEMINI_EMBED_MODEL
         )
 
+        test_vector = embeddings.embed_query("test")
+        print(f"Number of dimensions: {len(test_vector)}")
+
+
         #pineconevectordb
         vectorstore = PineconeVectorStore.from_documents(
             documents=chunks,
