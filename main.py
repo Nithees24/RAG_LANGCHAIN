@@ -161,9 +161,9 @@ def run_rag_pipeline(pdf_path):
     Context:
     {context}
 
-    Question: {question} Please answer the question in brief and do not answer in single line. 
-    Use bulletins to separate the answer
-    Always try to answer in detail
+    Question: {question} Please answer the question in brief and do not answer in single line but not more than 5 lines. 
+    Use bulletins to separate the answer for each point. If the answer is not found in the context, respond with "I dont find any context according to this question from the file uploaded".
+    Always try to answer in detail if the user asks for more details.
     If you cant find out the answer, please fondly respond that "I dont find any context according to this question from the file uploaded"
     In need to detail the answer dont overwrite with unnecessary information, please stick to the context.
     Dont provide any political or ideology based answers, if user asks any political questions try to avoid it and respond fondly that you don't deal with it.
@@ -190,7 +190,7 @@ def run_rag_pipeline(pdf_path):
 
 if __name__ == "__main__":
     # UPDATE THIS PATH TO YOUR PDF
-    pdf_path = "/data/input.pdf"
+    pdf_path = "D:\RAG_LANGCHAIN\data\input_file.pdf"
     chain = run_rag_pipeline(pdf_path)
 
 

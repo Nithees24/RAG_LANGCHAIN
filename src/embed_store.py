@@ -1,11 +1,12 @@
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
-
 
 from settings.config import(USE_API_EMBED,GEMINI_EMBED_MODEL,LOCAL_EMBED_MODEL,PINECONE_INDEX)
 
@@ -23,15 +24,20 @@ def create_vector_store(chunks):
     """
 
     if USE_API_EMBED:
-        print("Creating vector store using Gemini embedding-001 embeddings")
+        print("Creating vector store using Cloud based Embeddings")
 
         #geminiembeddings
-        embeddings = GoogleGenerativeAIEmbeddings(
-            model=GEMINI_EMBED_MODEL
+        # embeddings = GoogleGenerativeAIEmbeddings(
+        #     model=GEMINI_EMBED_MODEL
+        # )
+
+        embeddings = HuggingFaceEndpointEmbeddings(
+            huggingfacehub_api_token=os.getenv("HUGGINGFACE_API_KEY"),
+            model="BAAI/bge-base-en-v1.5"
         )
 
         test_vector = embeddings.embed_query("test")
-        print(f"Number of dimensions: {len(test_vector)}")
+        print(f"Dimension: {len(test_vector)}")
 
 
         #pineconevectordb
